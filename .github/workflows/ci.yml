@@ -99,7 +99,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}/nodejs-api
+          images: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-nodejs-api
           tags: |
             type=ref,event=branch
             type=sha,format=long
@@ -113,8 +113,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/nodejs-api:cache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/nodejs-api:cache,mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-nodejs-api:cache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-nodejs-api:cache,mode=max
 
   notify:
     needs: [build-and-test, docker]
